@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kb.www.bbs.action.MemberJoinAction;
+import com.kb.www.bbs.action.MemberJoinProcAction;
 import com.kb.www.common.Action;
 import com.kb.www.common.ActionForward;
 
@@ -28,6 +30,11 @@ public class BoardController extends HttpServlet {
     	ActionForward forward = null;
     	Action action = null;
     	
+    	if (command.equals("/memberJoin.do")) {
+    		action = new MemberJoinAction();
+    	} else if (command.equals("/memberJoinProc.do")) {
+    		action = new MemberJoinProcAction();
+    	}
     	
     	try {
 			forward = action.execute(request, response);
