@@ -14,7 +14,7 @@ public class JdbcUtil {
 		try {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-			DataSource ds = (DataSource) envCtx.lookup("jdbc/mysqlDB");
+			DataSource ds = (DataSource) envCtx.lookup("jdbc/MysqlDB");
 			con = ds.getConnection();
 			con.setAutoCommit(false);
 		} catch (Exception e) {

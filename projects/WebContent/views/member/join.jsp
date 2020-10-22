@@ -80,7 +80,7 @@
 <body>
 	<form method="post" action="memberJoinProc.do" id="joinForm">
 		<div>
-			이름 <input type="text" name="nm" id="name" maxlength="10">
+			이름 <input type="text" name="name" id="name" maxlength="10">
 		</div>
 		<div>
 			아이디 <input type="text" name="id" id="id" maxlength="20">

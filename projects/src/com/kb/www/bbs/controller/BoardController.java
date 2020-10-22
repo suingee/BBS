@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kb.www.bbs.action.MemberDeleteAction;
 import com.kb.www.bbs.action.MemberJoinAction;
 import com.kb.www.bbs.action.MemberJoinProcAction;
+import com.kb.www.bbs.action.MemberLoginAction;
+import com.kb.www.bbs.action.MemberLoginProcAction;
+import com.kb.www.bbs.action.MemberLogoutAction;
 import com.kb.www.common.Action;
 import com.kb.www.common.ActionForward;
 
@@ -34,6 +38,16 @@ public class BoardController extends HttpServlet {
     		action = new MemberJoinAction();
     	} else if (command.equals("/memberJoinProc.do")) {
     		action = new MemberJoinProcAction();
+    	} else if (command.equals("/memberLogin.do")) {
+    		action = new MemberLoginAction();
+    	} else if (command.equals("/memberLoginProc.do")) {
+    		action = new MemberLoginProcAction();
+    	} else if (command.equals("/memberLogout.do")) {
+    		action = new MemberLogoutAction();
+    	} else if (command.equals("/memberDelete.do")) {
+    		action = new MemberDeleteAction();
+    	} else if (command.equals("/memberUpdate.do")) {
+    		action = new MemberUpdateAction();
     	}
     	
     	try {
