@@ -10,11 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kb.www.bbs.action.MemberDeleteAction;
+import com.kb.www.bbs.action.MemberFindIdAction;
+import com.kb.www.bbs.action.MemberFindIdProcAction;
+import com.kb.www.bbs.action.MemberFindPwdAction;
+import com.kb.www.bbs.action.MemberFindPwdProcAction;
 import com.kb.www.bbs.action.MemberJoinAction;
 import com.kb.www.bbs.action.MemberJoinProcAction;
 import com.kb.www.bbs.action.MemberLoginAction;
 import com.kb.www.bbs.action.MemberLoginProcAction;
 import com.kb.www.bbs.action.MemberLogoutAction;
+import com.kb.www.bbs.action.MemberUpdateAction;
+import com.kb.www.bbs.action.ModifyMemberInfoAction;
+import com.kb.www.bbs.action.ModifyMemberInfoProcAction;
 import com.kb.www.common.Action;
 import com.kb.www.common.ActionForward;
 
@@ -48,6 +55,22 @@ public class BoardController extends HttpServlet {
     		action = new MemberDeleteAction();
     	} else if (command.equals("/memberUpdate.do")) {
     		action = new MemberUpdateAction();
+    	} else if (command.equals("/modifyMemberInfo.do")) {
+    		action = new ModifyMemberInfoAction();
+    	} else if (command.equals("/modifyMemberInfoProc.do")) {
+    		action = new ModifyMemberInfoProcAction();
+    	} else if (command.equals("/findId.do")) {
+    		action = new MemberFindIdAction();
+    	} else if (command.equals("/findIdProc.do")) {
+    		action = new MemberFindIdProcAction();
+    	} else if (command.equals("/findIdProc.do")) {
+    		action = new MemberFindIdProcAction();
+    	} else if (command.equals("/findPwd.do")) {
+    		action = new MemberFindPwdAction();
+    	} else if (command.equals("/findPwdProc.do")) {
+    		action = new MemberFindPwdProcAction();
+    	} else if (command.equals("/findPwdAfter.do")) {
+    		action = new MemberFindPwdAfterAction();
     	}
     	
     	try {
@@ -60,10 +83,8 @@ public class BoardController extends HttpServlet {
 		}
     	
     	if (forward.isRedirect()) {
-    		// 리다이렉트
     		response.sendRedirect(forward.getPath());
     	} else {
-    		// 디스패치
     		RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
     		dispatcher.forward(request, response);
     	}

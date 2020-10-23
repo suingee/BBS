@@ -11,7 +11,7 @@ import static com.kb.www.common.JdbcUtil.*;
 public class MemberDao {
 	private Connection con;
 	
-	// ½Ì±ÛÅæ ÆÐÅÏ
+	// ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private MemberDao() {
 		
 	}
@@ -140,5 +140,66 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return count;
+	}
+	
+	public int modifyMemberInfo(MemberVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("UPDATE member SET nm = ? WHERE BINARY(id) = ?");
+			pstmt.setString(1, vo.getNm());
+			pstmt.setString(2, vo.getId());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public MemberVo findId(String name) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberVo vo = null;
+		try {
+			pstmt = con.prepareStatement("SELECT id FROM member WHERE nm = ?");
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo = new MemberVo();
+				vo.setId(rs.getString("id"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return vo;
+	}
+	
+	public MemberVo findPwd(String name, String id) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberVo vo = null;
+		try {
+			pstmt = con.prepareStatement("SELECT pwd FROM member WHERE nm = ? AND id = ?");
+			pstmt.setString(1, name);
+			pstmt.setString(2, id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo = new MemberVo();
+				vo.setPwd(rs.getString("pwd"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return vo;
 	}
 }

@@ -17,6 +17,8 @@
 %>
 <a href="memberJoin.do">회원가입</a>
 <a href="memberLogin.do">로그인</a>
+<a href="findId.do">아이디 찾기</a>
+<a href="findPwd.do">비밀번호 찾기</a>
 <%
 	} else {
 %>
