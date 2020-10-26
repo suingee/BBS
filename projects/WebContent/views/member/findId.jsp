@@ -16,7 +16,7 @@
 		if (!name) {
 			alert("이름을 입력해 주세요.");
 			$('#name').focus();
-			return false;
+			return;
 		}
 		
 		$('#find').submit();

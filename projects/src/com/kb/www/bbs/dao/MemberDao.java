@@ -180,18 +180,17 @@ public class MemberDao {
 		return vo;
 	}
 	
-	public MemberVo findPwd(String name, String id) {
+	public int findPwd(MemberVo vo) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		MemberVo vo = null;
+		int mb_sq = 0;
 		try {
-			pstmt = con.prepareStatement("SELECT pwd FROM member WHERE nm = ? AND id = ?");
-			pstmt.setString(1, name);
-			pstmt.setString(2, id);
+			pstmt = con.prepareStatement("SELECT mb_sq FROM member WHERE nm = ? AND BINARY(id) = ?");
+			pstmt.setString(1, vo.getNm());
+			pstmt.setString(2, vo.getId());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				vo = new MemberVo();
-				vo.setPwd(rs.getString("pwd"));
+				mb_sq = rs.getInt("mb_sq");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -200,6 +199,22 @@ public class MemberDao {
 			close(pstmt);
 		}
 		
-		return vo;
+		return mb_sq;
+	}
+	
+	public int modifyPwd(MemberVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("UPDATE member SET pwd = ? WHERE mb_sq = ?");
+			pstmt.setString(1, vo.getPwd());
+			pstmt.setInt(2, vo.getMb_sq());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
 	}
 }

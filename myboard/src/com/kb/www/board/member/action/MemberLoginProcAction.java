@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kb.www.board.member.service.MemberService;
 import com.kb.www.board.member.vo.MemberVo;
@@ -40,8 +41,17 @@ public class MemberLoginProcAction implements Action {
 		LoginManager lm = LoginManager.getInstance();
 		lm.setSession(request.getSession(), id);
 		
+		HttpSession session = request.getSession();
 		ActionForward forward = new ActionForward();
-		forward.setPath("/");
+		String callback = (String) session.getAttribute("callback"); 
+		if (callback != null) {
+			forward.setPath(callback);
+			session.removeAttribute("callback");
+		} else {
+			forward.setPath("/");
+		}
+		
+	
 		forward.setRedirect(true);
 		return forward;
 	}

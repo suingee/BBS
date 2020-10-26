@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kb.www.bbs.service.MemberService;
 import com.kb.www.bbs.vo.MemberVo;
@@ -24,7 +25,7 @@ public class MemberLoginProcAction implements Action {
 				|| pwd == null || pwd.equals("")) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('Àß¸øµÈ Á¢±ÙÀÔ´Ï´Ù.'); location.href='/';</script>");
+			out.println("<script>alert('ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.'); location.href='/';</script>");
 			out.close();
 			return null;
 		}
@@ -34,7 +35,7 @@ public class MemberLoginProcAction implements Action {
 		if (memberVo == null || !BCrypt.checkpw(pwd, memberVo.getPwd())) {
 			response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('¾ÆÀÌµð ¶Ç´Â ºñ¹Ð¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.'); history.back();</script>");
+            out.println("<script>alert('ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.'); history.back();</script>");
             out.close();
             return null;
 		}
@@ -42,7 +43,7 @@ public class MemberLoginProcAction implements Action {
 		if (!svc.loginMember(memberVo)) {
 			response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('·Î±×ÀÎ Á¤º¸¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.'); location.href='/';</script>");
+            out.println("<script>alert('ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½.'); location.href='/';</script>");
             out.close();
             return null;
 		}
@@ -50,8 +51,16 @@ public class MemberLoginProcAction implements Action {
 		LoginManager lm = LoginManager.getInstance();
 		lm.setSession(request.getSession(), id);
 		
+		HttpSession session = request.getSession();
+		String callback = (String) session.getAttribute("callback");
 		ActionForward forward = new ActionForward();
-		forward.setPath("/");
+		if (callback != null) {
+			forward.setPath(callback);
+			session.removeAttribute("callback");
+		} else {
+			forward.setPath("/");
+		}
+		
 		forward.setRedirect(true);
 		return forward;
 	}

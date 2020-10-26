@@ -118,12 +118,28 @@ public class MemberService {
 		return vo;
 	}
 	
-	public MemberVo getFindPwd(String name, String id) {
+	public int getFindPwd(MemberVo vo) {
 		MemberDao dao = MemberDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		MemberVo vo = dao.findPwd(name, id);
+		int mb_sq = dao.findPwd(vo);
 		close(con);
 		return vo;
+	}
+	
+	public boolean modifyPwd(MemberVo memberVo) {
+		MemberDao dao = MemberDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		boolean isSucess = false;
+		int count = dao.modifyPwd(memberVo);
+		if (count > 0) {
+			commit(con);
+			isSucess = true;
+		} else {
+			rollback(con);
+		}
+		close(con);
+		return isSucess;
 	}
 }

@@ -48,7 +48,8 @@
 				return;
 			}
 			
-			var regExpName = new RegExp("^[가-힣a-z]{1,10}", "g");
+			var regExpName = new RegExp("^[가-힣a-z]{1,10}$", "g");
+			console.log(name.val());
 			if (regExpName.exec(name.val()) == null) {
 				alert("이름은 1~10자의 한글 또는 영문 소문자로 입력해 주세요.");
 				name.val('');
@@ -56,7 +57,7 @@
 				return;
 			}
 			
-			var regExpId = new RegExp("^[a-z0-9]{4,20}", "g");
+			var regExpId = new RegExp("^[a-z0-9]{4,20}$", "g");
 			if (regExpId.exec(id.val()) == null) {
 				alert("아이디는 2~20자의 영문 소문자, 숫자로 입력해 주세요.");
 				id.val('');
@@ -64,7 +65,7 @@
 				return;
 			}
 			
-			var regExpPwd = new RegExp("^.{4,20}", "g");
+			var regExpPwd = new RegExp("^.{4,20}$", "g");
 			if (regExpPwd.exec(pwd.val()) == null) {
 				alert("비밀번호는 4~20자로 입력해 주세요.");
 				pwd.val('');

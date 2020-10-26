@@ -111,7 +111,109 @@ public class MemberDao {
 		
 		return count;
 	}
+	
+	public int modifyMemberInfo(MemberVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		
+		try {
+			pstmt = con.prepareStatement
+					("update member set nm=? where binary(id)=?");
+			pstmt.setString(1, vo.getNm());
+			pstmt.setString(2, vo.getId());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return count;
+	}
+	
+	public String getMemberId(String name) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String id = null;
+		try {
+			pstmt = con.prepareStatement
+					("select id from member where nm=?");
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				id = rs.getString("id");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return id;
+	}
+	
+	public int getMemberSequence(MemberVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int mb_sq = 0;
+		try {
+			pstmt = con.prepareStatement
+					("select mb_sq from member "
+							+ "where nm=? and binary(id)=?");
+			pstmt.setString(1, vo.getNm());
+			pstmt.setString(2, vo.getId());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				mb_sq = rs.getInt("mb_sq");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return mb_sq;
+	}
+	
+	public int updatePwd(MemberVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		
+		try {
+			pstmt = con.prepareStatement
+					("update member set pwd=? where mb_sq=?");
+			pstmt.setString(1, vo.getPwd());
+			pstmt.setInt(2, vo.getMb_sq());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return count;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -12,6 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="list.do">게시판 이동</a>
 <%
 	if (id == null) {
 %>

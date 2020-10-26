@@ -40,6 +40,31 @@
 		<div>
 			<input type="submit" value="로그인" />
 		</div>
+		<div>
+			<input type="button" onclick="location.href='searchId.do'" value="아이디찾기" />
+			<input type="button" onclick="location.href='searchPwd.do'" value="비밀번호찾기" />
+		</div>
 	</form>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	int sq = (int) request.getAttribute("sq");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +56,7 @@
 	비밀번호 <input type="password" name="pwd" id="pwd" maxlength="20">
 	비밀번호확인 <input type="password" name="confirm_pwd" id="confirm_pwd" maxlength="20">
 	<button type="button" onclick="checkValidate()">입력</button>
+	<input type="hidden" value="<%= sq %>" name="mb_sq">
 </form>
 </body>
 </html>

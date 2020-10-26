@@ -10,6 +10,7 @@ import com.kb.www.bbs.vo.MemberVo;
 import com.kb.www.common.Action;
 import com.kb.www.common.ActionForward;
 import com.kb.www.common.BCrypt;
+import com.kb.www.common.LoginManager;
 import com.kb.www.common.RegExp;
 
 import static com.kb.www.common.RegExp.*;
@@ -17,10 +18,9 @@ import static com.kb.www.common.RegExp.*;
 public class MemberFindPwdProcAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String name = request.getParameter("name");
-		String id = request.getParameter("id");
-		if (name == null || name.equals("") || !RegExp.isValid(MEMBER_NAME, name)
-				|| id == null || id.equals("") || !RegExp.isValid(MEMBER_ID, id)) {
+		LoginManager lm = LoginManager.getInstance();
+		String id = lm.getMemberId(request.getSession());
+		if (id != null) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('�߸��� �����Դϴ�.');location.href='/';</script>");
@@ -28,12 +28,26 @@ public class MemberFindPwdProcAction implements Action {
 			return null;
 		}
 		
-		MemberService svc = new MemberService();
-		MemberVo vo = svc.getFindPwd(name, id);
-		if (vo == null) {
+		String name = request.getParameter("name");
+		id = request.getParameter("id");
+		if (name == null || name.equals("")
+				|| id == null || id.equals("")) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('잘못된 접근입니다.');location.href='/';</script>");
+			out.println("<script>alert('�߸��� �����Դϴ�.');location.href='/';</script>");
+			out.close();
+			return null;
+		}
+		MemberVo memberVo = new MemberVo();
+		memberVo.setNm(name);
+		memberVo.setId(id);
+		
+		MemberService svc = new MemberService();
+		
+		if (mb_sq == 0) {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('회원 정보를 찾을 수 없습니다.');history.back();</script>");
 			out.close();
 			return null;
 		}

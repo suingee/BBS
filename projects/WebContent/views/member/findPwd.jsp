@@ -17,13 +17,13 @@
 		if (!name) {
 			alert("이름을 입력해 주세요.");
 			$('#name').focus();
-			return false;
+			return;
 		}
 		
 		if (!id) {
 			alert("아이디를 입력해 주세요.");
 			$('#id').focus();
-			return false;
+			return;
 		}
 		
 		$('#find').submit();

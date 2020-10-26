@@ -59,7 +59,72 @@ public class MemberService {
 		close(con);
 		return isSucess;
 	}
+	
+	public boolean modifyMemberInfo(MemberVo vo) {
+		MemberDao dao = MemberDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		boolean isSucess = false;
+		int count = dao.modifyMemberInfo(vo);
+		if (count > 0) {
+			isSucess = true;
+			commit(con);
+		} else {
+			isSucess = false;
+			rollback(con);
+		}
+		close(con);
+		return isSucess;
+	}
+	
+	public String getMemberId(String name) {
+		MemberDao dao = MemberDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		String id = dao.getMemberId(name);
+		close(con);
+		return id;
+	}
+	
+	public int getMemberSequence(MemberVo vo) {
+		MemberDao dao = MemberDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int mb_sq = dao.getMemberSequence(vo);
+		close(con);
+		return mb_sq;
+	}
+	
+	public boolean updatePwd(MemberVo vo) {
+		MemberDao dao = MemberDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		boolean isSucess = false;
+		int count = dao.updatePwd(vo);
+		if (count > 0) {
+			isSucess = true;
+			commit(con);
+		} else {
+			isSucess = false;
+			rollback(con);
+		}
+		close(con);
+		return isSucess;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

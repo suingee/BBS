@@ -16,8 +16,10 @@
 	<a href="memberJoin.do">회원가입</a>
 	<a href="login.do">로그인</a>
 	<%} else { %>
+	<a href="memberDetail.do">회원정보</a>
 	<a href="logout.do">로그아웃</a>
 	<a href="leave.do">회원탈퇴</a>
 	<%} %>
+	<a href="list.do">게시판</a>
 </body>
 </html>
